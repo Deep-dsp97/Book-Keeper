@@ -1,16 +1,25 @@
 import { useState } from "react"
 import BookCreate from "./components/BookCreate";
 import BookList from "./components/BookList";
+import axios from "axios";
 
 const App = () => {
 
   const [books, setBooks] = useState([]);
   
-  const createBook = (title) => {
-    const updatedBooks = [...books, 
-        {id: Math.round(Math.random() * 9999 ), title: title }
-    ];
+  const createBook = async (title) => {
+    const response = await axios.post('http://localhost:3007/books',{
+        title: title
+    })
+    
+    const updatedBooks = [...books, response.data];
     setBooks(updatedBooks);
+    
+    // -------- Local - not persistent
+    // const updatedBooks = [...books, 
+    //     {id: Math.round(Math.random() * 9999 ), title: title }
+    // ];
+    // setBooks(updatedBooks);
   }
 
   const deleteBookById = (id) => {
