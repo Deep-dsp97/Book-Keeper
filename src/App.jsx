@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import BookCreate from "./components/BookCreate";
 import BookList from "./components/BookList";
 import axios from "axios";
@@ -6,6 +6,17 @@ import axios from "axios";
 const App = () => {
 
   const [books, setBooks] = useState([]);
+
+  //   When app starts up, make a request to API
+  // to get the current list of books
+  const fetchBooks = async () => {
+    const response =  await axios.post('http://localhost:3007/books');
+    setBooks(response.data);
+  }
+
+  useEffect(() => {
+    fetchBooks();
+  }, []);
   
   const createBook = async (title) => {
     const response = await axios.post('http://localhost:3007/books',{
@@ -14,7 +25,7 @@ const App = () => {
     
     const updatedBooks = [...books, response.data];
     setBooks(updatedBooks);
-    
+
     // -------- Local - not persistent
     // const updatedBooks = [...books, 
     //     {id: Math.round(Math.random() * 9999 ), title: title }
