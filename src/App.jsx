@@ -10,7 +10,7 @@ const App = () => {
   //   When app starts up, make a request to API
   // to get the current list of books
   const fetchBooks = async () => {
-    const response =  await axios.post('http://localhost:3007/books');
+    const response =  await axios.get('http://localhost:3007/books');
     setBooks(response.data);
   }
 
@@ -33,17 +33,28 @@ const App = () => {
     // setBooks(updatedBooks);
   }
 
-  const deleteBookById = (id) => {
+  const deleteBookById = async (id) => {
+    //------ Update Db.json
+    const response = await axios.delete(`http://localhost:3007/books/${id}`);
+
+    //------ End block - Update Db.json
     const updatedBooks = books.filter((book) => {
         return book.id !== id;
     })
     setBooks(updatedBooks);
   }
 
-  const editBookById = (id, newTitle) => {
+  const editBookById =  async (id, newTitle) => {
+
+    //------ Update Db.json
+    const response = await axios.put(`http://localhost:3007/books/${id}`, {
+      title: newTitle
+    })
+    //------ End block - Update Db.json
+
     const updateEditBook = books.map((book) => {
         if(book.id == id){
-            return {...book, title:newTitle};
+            return {...book, ...response.data};
         }
         return book;
     })
