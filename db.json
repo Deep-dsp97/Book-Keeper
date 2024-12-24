@@ -1,14 +1,6 @@
 {
   "books": [
     {
-      "title": "Harry",
-      "id": 1
-    },
-    {
-      "title": "Ron",
-      "id": 2
-    },
-    {
       "title": "GOT 2",
       "id": 3
     }
