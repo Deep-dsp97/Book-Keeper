@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useCallback } from "react";
 import axios from "axios";
 
 const BooksContext = createContext(null);
@@ -13,6 +13,10 @@ function Provider({children}){
         const response =  await axios.get('http://localhost:3007/books');
         setBooks(response.data);
     }
+
+    // useCallBack to avoid infinite look we get while fixing
+    // useEffect warning from Eslint
+    const stableFetchBook = useCallback(fetchBooks, []);
 
     const createBook = async (title) => {
         const response = await axios.post('http://localhost:3007/books',{
@@ -56,7 +60,8 @@ function Provider({children}){
         deleteBookById: deleteBookById,
         editBookById: editBookById,
         createBook: createBook,
-        fetchBooks: fetchBooks
+        fetchBooks: fetchBooks,
+        stableFetchBook: stableFetchBook
     }
 
     return <BooksContext.Provider value={valueToShare}>

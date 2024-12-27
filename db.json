@@ -1,15 +1,11 @@
 {
   "books": [
     {
-      "title": "GOT 2",
-      "id": 3
-    },
-    {
       "title": "Ikigai",
       "id": 4
     },
     {
-      "title": "Psychology of Money",
+      "title": "Hello",
       "id": 5
     }
   ]
